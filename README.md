@@ -33,5 +33,17 @@ Then things are pretty easy, just run the python script here with input being th
 **Be sure to use the full paths.**
 
 ```bash
-./letsencryptlinker.py --input /etc/letsencrypt/archive /etc/letsencrypt/live
+./letsencryptlinker.py --input /etc/letsencrypt/archive --output /etc/letsencrypt/live
+```
+
+## There's a better way
+
+Turns out this whole script is not needed.  The symlinks created by LetsEncrypt are actually relative symlinks.  So you can just include them in the zipfile and unzip onto your new server.  Thanks to Osiris for the tip: https://community.letsencrypt.org/t/migrating-servers/179865/2
+
+Here's the corrected zip command:
+
+
+```bash
+cd /etc/letsencrypt
+zip -ry letsencrypt.zip archive/ renew/ accounts/ live/ ssl-dhparams.pem options-ssl-nginx.conf
 ```
