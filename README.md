@@ -6,12 +6,12 @@ I created this because I had a lot of sites and I needed to migrate servers.
 ## Migrating Between Servers with LetsEncrypt
 
 LetsEncrypt relies on a bunch of files in `/etc/letsencrypt` and a bunch of relevant symlinks.
-In order to migrate, you'll want to copy all the files in `/etc/letsencrypt/archive` and `/etc/letsencrypt/renew` over to your new server, as well as any stray files in the base directory.
+In order to migrate, you'll want to copy all the files in `/etc/letsencrypt/archive`, `/etc/letsencrypt/accounts`, and `/etc/letsencrypt/renew` over to your new server, as well as any stray files in the base directory.
 I did this with a simple command:
 
 ```bash
 cd /etc/letsencrypt
-zip -r letsencrypt.zip archive/ renew/ ssl-dhparams.pem options-ssl-nginx.conf
+zip -r letsencrypt.zip archive/ renew/ accounts/ ssl-dhparams.pem options-ssl-nginx.conf
 ```
 
 NOTE: I was using NGINX.  The files in the base directory may be different for apache or another webserver.
