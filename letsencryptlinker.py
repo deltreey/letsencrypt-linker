@@ -2,6 +2,7 @@
 
 import argparse
 import os.path
+from os.path import relpath
 import re
 
 
@@ -30,10 +31,18 @@ def main(input, output):
             number = matches.group(1)
             if int(matches.group(1)) > highest:
                 highest = int(matches.group(1))
-        os.symlink(os.path.join(input, directory, f'cert{highest}.pem'), os.path.join(output, directory, 'cert.pem'))
-        os.symlink(os.path.join(input, directory, f'chain{highest}.pem'), os.path.join(output, directory, 'chain.pem'))
-        os.symlink(os.path.join(input, directory, f'fullchain{highest}.pem'), os.path.join(output, directory, 'fullchain.pem'))
-        os.symlink(os.path.join(input, directory, f'privkey{highest}.pem'), os.path.join(output, directory, 'privkey.pem'))
+        os.symlink(relpath(os.path.join(input, directory, f'cert{highest}.pem'),
+                           os.path.join(output, directory)),
+                   os.path.join(output, directory, 'cert.pem'))
+        os.symlink(relpath(os.path.join(input, directory, f'chain{highest}.pem'),
+                           os.path.join(output, directory)),
+                   os.path.join(output, directory, 'chain.pem'))
+        os.symlink(relpath(os.path.join(input, directory, f'fullchain{highest}.pem'),
+                           os.path.join(output, directory)),
+                   os.path.join(output, directory, 'fullchain.pem'))
+        os.symlink(relpath(os.path.join(input, directory, f'privkey{highest}.pem'),
+                           os.path.join(output, directory)),
+                   os.path.join(output, directory, 'privkey.pem'))
     print('Done.')
 
 
